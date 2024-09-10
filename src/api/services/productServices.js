@@ -19,5 +19,19 @@ class productServices {
             throw new Error(err);
         }
     }
+    async deleteProductService(id) {
+        try {
+            const delProduct = await productModel.findByIdAndDelete(id);
+            return delProduct;
+
+        }
+        catch (err) {
+            throw new Error(err);
+        }
+    }
+    async putProductService(id){
+            const putProduct = await productModel.findOneAndUpdate(id);
+            return putProduct;
+    }
 }
 export default new productServices()
