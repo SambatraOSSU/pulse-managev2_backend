@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import productModel from "../models/productModels.js";
+import productModel from "../models/productModel.js";
 class productServices{
-    async addproductService(){
+    async addproductService(productData){
             try{
                 const product = new productModel({...productData})
                 return await product.save()
