@@ -29,9 +29,17 @@ class productServices {
             throw new Error(err);
         }
     }
-    async putProductService(id){
-            const putProduct = await productModel.findOneAndUpdate(id);
-            return putProduct;
+    async putProductService(id, updateData) {
+        try {
+            const putProduct = await productModel.findByIdAndUpdate(id, updateData, { new: true, runValidator: true });
+            console.log(putProduct);
+            
+            if (putProduct) {
+                return putProduct;
+            }
+        } catch (err) {
+            throw new Error(err);
+        }
     }
 }
 export default new productServices()

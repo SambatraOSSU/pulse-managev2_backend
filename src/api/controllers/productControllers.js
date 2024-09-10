@@ -13,15 +13,19 @@ class productControllers {
         return res.status(200).json(allProduct)
     }
     async deleteProduct(req, res) {
-        const id = req.params
+        const id = req.params.productId
         const delProduct = await productServices.deleteProductService(id)
         return res.status(200).json({ message: "removed with succed" })
 
     }
     async putProduct(req, res) {
-        const id = req.params
-        const putProduct = await productServices.putProductService(id)
-        return res.status(200).json({ message: "put with succed", putProduct })
+        const id = req.params.productId
+        const update = req.body
+        const putProduct = await productServices.putProductService(id,update)
+        if(!putProduct){
+            res.status(400).json({message:"error"})
+        }
+        return res.json(putProduct)
     }
 }
 export default new productControllers();
