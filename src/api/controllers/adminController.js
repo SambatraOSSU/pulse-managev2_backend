@@ -31,7 +31,6 @@ class AdminController {
             console.error(err);
             return res.status(500).json({ message: "erreur" });
         }
-
     }
     async login(req, res) {
         try {
@@ -45,5 +44,4 @@ class AdminController {
         }
     }
 }
-
-export default new  AdminController();
+export default new AdminController();
