@@ -3,6 +3,7 @@ import authServices from "../services/authServices.js";
 import TokenHelper from "../helpers/tokenHelper.js";
 import passwordHelper from "../helpers/passwordHelper.js";
 import orderServices from "../services/orderServices.js"
+import deliveryServices from "../services/deliveryServices.js";
 class clientControlller {
     async register(req, res) {
         try {
@@ -55,7 +56,18 @@ class clientControlller {
             return res.status(400).json({ message: "error order" });
         }
         return res.json(newProduct)
-
+    }
+    async delivery(req, res) {
+        try {
+            const newDelivery = await deliveryServices.addDeliveryService(req.body)
+            if (!newDelivery) {
+                res.status(400).json({ message: "delivery non ajouter" })
+            }
+            return res.json(newDelivery);
+        }
+        catch (err) {
+            throw new Error(err.message);
+        }
     }
 }
 export default new clientControlller();
