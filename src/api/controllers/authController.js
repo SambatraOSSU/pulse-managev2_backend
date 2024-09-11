@@ -1,6 +1,6 @@
 import userServices from "../services/userServices.js";
 import authServices from "../services/authServices.js";
-import tokenHelper from "../helpers/tokenHelper.js";
+import TokenHelper from "../helpers/tokenHelper.js";
 import passwordHelper from "../helpers/passwordHelper.js";
 class AuthControlller {
     async register(req,res){
@@ -40,7 +40,7 @@ class AuthControlller {
             // if (!customer) {
             //     res.status(400).json("email does not exist or the password is incorrect...")
             // }
-            const token = tokenHelper.generateToken(customer.id.toString())
+            const token =await TokenHelper.generateToken(customer.id.toString())
             return res.status(200).json({ message: "User login successfully", customer, token });
         }
         catch (err) {

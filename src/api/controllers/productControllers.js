@@ -21,11 +21,15 @@ class productControllers {
     async putProduct(req, res) {
         const id = req.params.productId
         const update = req.body
-        const putProduct = await productServices.putProductService(id,update)
-        if(!putProduct){
-            res.status(400).json({message:"error"})
+        const putProduct = await productServices.putProductService(id, update)
+        if (!putProduct) {
+            res.status(400).json({ message: "error" })
         }
         return res.json(putProduct)
+    }
+    async putStock(req, res) {
+        const id = req.params;
+        const update = req.body;
     }
 }
 export default new productControllers();
