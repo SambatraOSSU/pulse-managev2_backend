@@ -1,5 +1,4 @@
 import { model, Schema } from "mongoose";
-
 const productSchema = new Schema({
     productId: {
         type: Schema.Types.ObjectId,
@@ -11,7 +10,6 @@ const productSchema = new Schema({
         required: true
     }
 });
-
 const orderSchema = new Schema(
     {
         totalprice: {

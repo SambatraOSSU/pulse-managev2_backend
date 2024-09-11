@@ -2,6 +2,7 @@ import userServices from "../services/userServices.js";
 import authServices from "../services/authServices.js";
 import TokenHelper from "../helpers/tokenHelper.js";
 import passwordHelper from "../helpers/passwordHelper.js";
+import orderServices from "../services/orderServices.js"
 class clientControlller {
     async register(req, res) {
         try {
@@ -49,7 +50,12 @@ class clientControlller {
         }
     }
     async addOrder(req, res) {
-            
+        const newProduct = await orderServices.addOrderServices(req.body)
+        if (!newProduct) {
+            return res.status(400).json({ message: "error order" });
+        }
+        return res.json(newProduct)
+
     }
 }
 export default new clientControlller();

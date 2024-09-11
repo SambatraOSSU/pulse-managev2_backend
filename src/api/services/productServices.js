@@ -14,11 +14,9 @@ class productServices {
                 product: product._id
             });
 
-            // Sauvegarder le stock et le produit
             await newStock.save();
             return await product.save();
         } catch (err) {
-            // Propager l'erreur en cas d'échec
             throw new Error(err.message);
         }
     }

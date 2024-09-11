@@ -14,7 +14,7 @@ app.use(cors());
 app.use(compression());
 app.use(morgan("dev"));
 
-app.use("/auth", clientRouter);
+app.use("/client", clientRouter);
 app.use("/admin", adminRouter);
 
 app.get("/", (res) => {
