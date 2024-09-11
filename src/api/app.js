@@ -14,6 +14,19 @@ app.use(cors());
 app.use(compression());
 app.use(morgan("dev"));
 
+// app.use(
+//     "/admin_files_upload",
+//     express.static(path.join(__dirname, "../../admin_files_upload"))
+//   );
+//   app.use(
+//     "/product_files_upload",
+//     express.static(path.join(__dirname, "../../product_files_upload"))
+//   );
+//   app.use(
+//     "/clients_files_upload",
+//     express.static(path.join(__dirname, "../../clients_files_upload"))
+//   );
+
 app.use("/customer", clientRouter);
 app.use("/admin", adminRouter);
 

@@ -4,8 +4,9 @@ import stockModel from "../models/stockModel.js"
 class productServices {
     async addproductService(productData) {
         try {
-            const product = new productModel({ ...productData });
 
+            const product = new productModel({ ...productData });
+            
             const { name } = productData;
             const stockName = `${name}_stock`;
             const newStock = new stockModel({
