@@ -1,56 +1,26 @@
 import mongoose from "mongoose";
 import productModel from "../models/productModel.js";
-import stockModel from "../models/stockModel.js"
-class productServices {
-    async addproductService(productData) {
-        try {
+import stockModel from "../models/stockModel.js";
 
-            const product = new productModel({ ...productData });
-            
-            const { name } = productData;
-            const stockName = `${name}_stock`;
-            const newStock = new stockModel({
-                name: stockName,
-                quantity: 50,
-                product: product._id
-            });
-
-            await newStock.save();
-            return await product.save();
-        } catch (err) {
-            throw new Error(err.message);
-        }
+class ProductService {
+  async addProductService(productData) {
+    try {
+      console.log("data post:", productData);
+      const product = new productModel({ ...productData });
+      const { productName } = productData;
+      const stockName = `${productName}_stock`;
+      const newStock = new stockModel({
+        name: stockName,
+        quantity: 50,
+        product: product._id,
+      });
+      await product.save();
+      await newStock.save();
+      return product;
+    } catch (err) {
+      throw new Error(err.message);
     }
-    async getProductService() {
-        try {
-            const allProduct = await productModel.find();
-            return allProduct;
-        }
-        catch (err) {
-            throw new Error(err);
-        }
-    }
-    async deleteProductService(id) {
-        try {
-            const delProduct = await productModel.findByIdAndDelete(id);
-            return delProduct;
-
-        }
-        catch (err) {
-            throw new Error(err);
-        }
-    }
-    async putProductService(id, updateData) {
-        try {
-            const putProduct = await productModel.findByIdAndUpdate(id, updateData, { new: true, runValidator: true });
-            console.log(putProduct);
-
-            if (putProduct) {
-                return putProduct;
-            }
-        } catch (err) {
-            throw new Error(err);
-        }
-    }
+  }
 }
-export default new productServices()
+
+export default new ProductService();

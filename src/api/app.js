@@ -31,7 +31,7 @@ app.use("/customer", clientRouter);
 app.use("/admin", adminRouter);
 
 app.get("/", (res) => {
-    res.json("Server working well!!! ✅");
+  res.json("Server working well!!! ✅");
 });
 
 app.use("/node-api", route);

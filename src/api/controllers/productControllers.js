@@ -1,46 +1,84 @@
-import productServices from "../services/productServices.js"
+import productServices from "../services/productServices.js";
+
 class productControllers {
-    async addProduct(req, res) {
-        const newProduct = await productServices.addproductService({
-            ...req.body, picture, productSize: sizeArray, category: categoryArray
-        })
-        if (!newProduct) {
-            res.status(400).json({ Message: "error on add new product" })
-        }
-        const picture = {
-            file_path: req.file.path,
-            file_name: req.file.originalname,
-            size: req.file.size,
-        };
-        const sizeArray = productSize.split(",");
-        const categoryArray = category.split(",");
-        return res.status(200).json(newProduct);
+  async addProduct(req, res) {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
     }
 
+    console.log(req.body);
+    const picture = {
+      file_path: req.file.path,
+      file_name: req.file.originalname,
+      size: req.file.size,
+    };
 
-    async getProduct(req, res) {
-        const allProduct = await productServices.getProductService();
-        if (!allProduct) { res.status(400).json({ message: "product zero" }) }
-        return res.status(200).json(allProduct)
-    }
-    async deleteProduct(req, res) {
-        const id = req.params.productId
-        const delProduct = await productServices.deleteProductService(id)
-        return res.status(200).json({ message: "removed with succed" })
+    const data = {
+      ...req.body,
+      picture,
+    } // Correct ay to log an object
 
+
+    try {
+      const newProduct = await productServices.addProductService(data);
+
+      return res.status(200).json(newProduct);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ Message: "Error adding new product", error: error.message });
     }
-    async putProduct(req, res) {
-        const id = req.params.productId
-        const update = req.body
-        const putProduct = await productServices.putProductService(id, update)
-        if (!putProduct) {
-            res.status(400).json({ message: "error" })
-        }
-        return res.json(putProduct)
+  }
+
+  async getProduct(req, res) {
+    try {
+      const allProduct = await productServices.getProductService();
+      if (!allProduct.length) {
+        return res.status(400).json({ message: "No products found" });
+      }
+      return res.status(200).json(allProduct);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Error fetching products", error: error.message });
     }
-    async putStock(req, res) {
-        const id = req.params;
-        const update = req.body;
+  }
+
+  async deleteProduct(req, res) {
+    const id = req.params.productId;
+    try {
+      const delProduct = await productServices.deleteProductService(id);
+      if (!delProduct) {
+        return res.status(400).json({ message: "Product not found" });
+      }
+      return res.status(200).json({ message: "Removed successfully" });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Error deleting product", error: error.message });
     }
+  }
+
+  async putProduct(req, res) {
+    const id = req.params.productId;
+    const update = req.body;
+    try {
+      const putProduct = await productServices.putProductService(id, update);
+      if (!putProduct) {
+        return res.status(400).json({ message: "Error updating product" });
+      }
+      return res.json(putProduct);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Error updating product", error: error.message });
+    }
+  }
+
+  async putStock(req, res) {
+    const id = req.params.productId;
+    const update = req.body;
+  }
 }
+
 export default new productControllers();

@@ -1,19 +1,18 @@
-import path  from "path"
-import multer from "multer"
+import path from "path";
+import fs from "fs";
+import multer from "multer";
 
-//pour stocjer le fichier
-let storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "admin_files_upload/");
+    cb(null, "files_uploaded/");
   },
   filename: function (req, file, cb) {
-    let ext = path.extname(file.originalname);
+    const ext = path.extname(file.originalname);
     cb(null, Date.now() + ext);
   },
 });
 
-//pour télécharger l' image
-let upload = multer({
+const upload = multer({
   storage: storage,
   fileFilter: function (req, file, callback) {
     const allowedImageTypes = [
@@ -34,8 +33,8 @@ let upload = multer({
     }
   },
   limits: {
-    fileSize: 1024 * 1024 * 5, //5mb
+    fileSize: 1024 * 1024 * 5, // 5 MB
   },
 });
 
-export  default  upload;
+export default upload;
